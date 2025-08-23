@@ -1,0 +1,48 @@
+name: Terraform
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.tf'
+      - 'backend.hcl'
+      - '.github/workflows/terraform.yml'
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    name: Terraform
+    runs-on: ubuntu-latest
+    env:
+      TF_VAR_app_name: ${{ secrets.APP_NAME }}
+      TF_VAR_app_service_plan_name: ${{ secrets.APP_SERVICE_PLAN_NAME }}
+      TF_VAR_app_service_plan_resource_group: ${{ secrets.APP_SERVICE_RESOURCE_GROUP_NAME }}
+      TF_VAR_log_analytics_workspace_name: ${{ secrets.LOG_ANALYTICS_WORKSPACE_NAME }}
+      TF_VAR_log_analytics_workspace_resource_group: ${{ secrets.LOG_ANALYTICS_WORKSPACE_RESOURCE_GROUP }}
+      TF_VAR_mysql_server_name: ${{ secrets.MYSQL_SERVER_NAME }}
+      TF_VAR_mysql_server_resource_group_name: ${{ secrets.MYSQL_SERVER_RESOURCE_GROUP_NAME }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+
+    - name: Terraform Init
+      run: terraform init \
+        -backend-config="resource_group_name=${{ secrets.TF_STATE_RG }}" \
+        -backend-config="storage_account_name=${{ secrets.TF_STATE_SA }}" \
+        -backend-config="container_name=${{ secrets.TF_STATE_CONTAINER }}" \
+        -backend-config="key=${{ secrets.TF_STATE_KEY }}"
+
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      run: terraform plan -out=tfplan
+      continue-on-error: true
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve tfplan
