@@ -1,3 +1,4 @@
+#file: noinspection UndefinedParamsPresent
 name: Terraform
 
 on:
@@ -26,6 +27,17 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: |
+          {
+            "clientId": "${{ secrets.ARM_CLIENT_ID }}",
+            "clientSecret": "${{ secrets.ARM_CLIENT_SECRET }}",
+            "subscriptionId": "${{ secrets.ARM_SUBSCRIPTION_ID }}",
+            "tenantId": "${{ secrets.ARM_TENANT_ID }}"
+          }
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v3
