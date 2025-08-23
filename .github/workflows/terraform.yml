@@ -31,11 +31,12 @@ jobs:
       uses: hashicorp/setup-terraform@v3
 
     - name: Terraform Init
-      run: terraform init \
-        -backend-config="resource_group_name=${{ secrets.TF_STATE_RG }}" \
-        -backend-config="storage_account_name=${{ secrets.TF_STATE_SA }}" \
-        -backend-config="container_name=${{ secrets.TF_STATE_CONTAINER }}" \
-        -backend-config="key=${{ secrets.TF_STATE_KEY }}"
+      run: |
+        terraform init \
+          -backend-config="resource_group_name=${{ secrets.TF_STATE_RG }}" \
+          -backend-config="storage_account_name=${{ secrets.TF_STATE_SA }}" \
+          -backend-config="container_name=${{ secrets.TF_STATE_CONTAINER }}" \
+          -backend-config="key=${{ secrets.TF_STATE_KEY }}"
 
     - name: Terraform Validate
       run: terraform validate
