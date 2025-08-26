@@ -39,12 +39,18 @@ resource "azurerm_storage_account" "main" {
 locals {
   index_queue = "index-queue"
   details_queue = "details-queue"
+  seasons_queue = "seasons-queue"
+  episodes_queue = "episodes-queue"
   show_ids_table = "showidstable"
   queues_to_create = toset([
     local.index_queue,
     "${local.index_queue}-stage",
     local.details_queue,
-    "${local.details_queue}-stage"
+    "${local.details_queue}-stage",
+    local.seasons_queue,
+    "${local.seasons_queue}-stage",
+    local.episodes_queue,
+    "${local.episodes_queue}-stage"
   ])
   tables_to_create = toset([
     local.show_ids_table,
