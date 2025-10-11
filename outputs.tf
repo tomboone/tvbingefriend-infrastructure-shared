@@ -74,6 +74,11 @@ output "storage_tables" {
   value       = { for k, v in azurerm_storage_table.main : k => v.name }
 }
 
+output "storage_containers" {
+  description = "Map of storage container names"
+  value       = { for k, v in azurerm_storage_container.main : k => v.name }
+}
+
 output "queue_names" {
   description = "List of all queue names"
   value       = values(azurerm_storage_queue.main)[*].name
@@ -82,4 +87,9 @@ output "queue_names" {
 output "table_names" {
   description = "List of all table names"
   value       = values(azurerm_storage_table.main)[*].name
+}
+
+output "container_names" {
+  description = "List of all container names"
+  value       = values(azurerm_storage_container.main)[*].name
 }
