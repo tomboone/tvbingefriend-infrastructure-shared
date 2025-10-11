@@ -42,6 +42,7 @@ locals {
   seasons_queue = "seasons-queue"
   episodes_queue = "episodes-queue"
   show_ids_table = "showidstable"
+  recommendation_container = "recommendation-container"
   queues_to_create = toset([
     local.index_queue,
     "${local.index_queue}-stage",
@@ -56,6 +57,10 @@ locals {
     local.show_ids_table,
     "${local.show_ids_table}stage"
   ])
+  containers_to_create = toset([
+    local.recommendation_container,
+    "${local.recommendation_container}-stage"
+  ])
 }
 
 resource "azurerm_storage_queue" "main" {
@@ -68,4 +73,10 @@ resource "azurerm_storage_table" "main" {
   for_each = local.tables_to_create
   name = each.key
   storage_account_name = azurerm_storage_account.main.name
+}
+
+resource "azurerm_storage_container" "main" {
+  for_each = local.containers_to_create
+  name = each.key
+  storage_account_id = azurerm_storage_account.main.id
 }
