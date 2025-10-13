@@ -93,3 +93,13 @@ output "container_names" {
   description = "List of all container names"
   value       = values(azurerm_storage_container.main)[*].name
 }
+
+output "acr_name" {
+  description = "Name of the Azure Container Registry"
+  value       = azurerm_container_registry.main.name
+}
+
+output "acr_rg_name" {
+  description = "Resource group of the Azure Container Registry"
+  value       = azurerm_container_registry.main.resource_group_name
+}
