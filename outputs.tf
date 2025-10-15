@@ -103,3 +103,14 @@ output "acr_rg_name" {
   description = "Resource group of the Azure Container Registry"
   value       = azurerm_container_registry.main.resource_group_name
 }
+
+output "acr_admin_username" {
+  description = "Username of the Azure Container Registry"
+  value = azurerm_container_registry.main.admin_username
+}
+
+output "acr_admin_password" {
+  description = "Password of the Azure Container Registry"
+  value = azurerm_container_registry.main.admin_password
+  sensitive = true
+}
