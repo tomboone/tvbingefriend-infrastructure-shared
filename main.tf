@@ -63,9 +63,9 @@ locals {
 }
 
 resource "azurerm_storage_queue" "main" {
-  for_each             = local.queues_to_create
-  name                 = each.key
-  storage_account_name = azurerm_storage_account.main.name
+  for_each           = local.queues_to_create
+  name               = each.key
+  storage_account_id = azurerm_storage_account.main.id
 }
 
 resource "azurerm_storage_table" "main" {
