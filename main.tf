@@ -88,3 +88,10 @@ resource "azurerm_container_registry" "main" {
   sku                 = "Basic"
   admin_enabled       = "true"
 }
+
+resource "azurerm_container_app_environment" "main" {
+  name                       = "${var.app_name}-env"
+  location                   = azurerm_resource_group.main.location
+  resource_group_name        = azurerm_resource_group.main.name
+  log_analytics_workspace_id = data.azurerm_log_analytics_workspace.existing.id
+}

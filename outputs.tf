@@ -114,3 +114,11 @@ output "acr_admin_password" {
   value = azurerm_container_registry.main.admin_password
   sensitive = true
 }
+
+output "container_app_environment_name" {
+  value = azurerm_container_app_environment.main.name
+}
+
+output "container_app_environment_resource_group_name" {
+  value = azurerm_container_app_environment.main.resource_group_name
+}
