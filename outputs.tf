@@ -33,6 +33,11 @@ output "mysql_server_resource_group_name" {
   value = data.azurerm_mysql_flexible_server.existing.resource_group_name
 }
 
+output "mysql_server_fqdn" {
+  description = "FQDN of the shared MySQL Flexible Server"
+  value = data.azurerm_mysql_flexible_server.existing.fqdn
+}
+
 output "resource_group_name" {
   description = "Name of the shared resource group"
   value       = azurerm_resource_group.main.name
@@ -115,10 +120,6 @@ output "acr_admin_password" {
   sensitive = true
 }
 
-output "container_app_environment_name" {
-  value = azurerm_container_app_environment.main.name
-}
-
-output "container_app_environment_resource_group_name" {
-  value = azurerm_container_app_environment.main.resource_group_name
+output "container_app_environment_id" {
+  value = azurerm_container_app_environment.main.id
 }
