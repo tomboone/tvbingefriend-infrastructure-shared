@@ -120,6 +120,11 @@ output "acr_admin_password" {
   sensitive = true
 }
 
+output "acr_login_server" {
+  description = "The login server for the Azure Container Registry"
+  value = azurerm_container_registry.main.login_server
+}
+
 output "container_app_environment_id" {
   value = azurerm_container_app_environment.main.id
 }
